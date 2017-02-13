@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>charts</title>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      
+        <link rel="stylesheet" href="/../css/style.css">
+           
+    </head>
+<body>
+<div class="data-table">
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+           
+            <th>Month</th>
+            <th>Money</th>
+       
+        </tr>
+                       
+        <% if(data.length){ 
+                        
+         for(var i = 0;i < data.length;i++) { %>
+         
+        <tr>
+          
+           
+            <td><%=data[i].month%></td>
+            <td><%=data[i].money%></td>
+            
+               
+               
+            </td>
+        </tr>
+    <% }
+    
+     }else{ %>
+         <tr>
+            <td colspan="5">No Data</td>
+         </tr>
+    <% } %>
+             
+
+
+
+    </table>
+     
+
+
+          <button id="Get_Graph" onclick="getData(); return false">Get Graph<button/>
+                  <div id="chart-container">
+       <canvas id="myChart"></canvas>
+        </div>
+    <script>
+
+    </script>
+     <script src="http://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    
+    <script type="text/javascript">
+
+               var ctx = document.getElementById("myChart");
+
+
+ function getData(){
+
+$.ajax({
+        url: "/p.json",
+        method: "GET",
+                 
+        success: function(data) {
+         console.log(data);
+            var datamonth = [];
+            var datamoney = [];
+            
+             var arr = $.map(data, function(el) { return el });
+                    console.log(arr);
+            for(var i in arr) {
+     
+                datamonth.push(arr[i].month);
+
+                datamoney.push(arr[i].money);
+          
+            }
+           
+
+            var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+
+        labels: datamonth,
+        datasets: [{
+            label: 'Percentage of money per month ',
+            data: datamoney,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+            
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+            
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+
+
+}
+
+
+    </script>
+    </body>
+</html>
+<!-- https://github.com/codetrash/rest-crud
+    <script src="/public/js/Charts.js"></script>
+http://www.fusioncharts.com/dev/using-with-server-side-languages/tutorials/
+http://www.fusioncharts.com/dev/using-with-server-side-languages/tutorials/creating-interactive-charts-using-node-express-and-mongodb.html
+
+http://stackoverflow.com/questions/34766350/receive-data-from-mysql-in-node-js-to-draw-graph
+
+https://www.google.gr/search?q=charts+js+and+pulling+data+from+mysql&oq=charts+js+and+pulling+data+from+mysql&aqs=chrome..69i57.6926j0j4&sourceid=chrome&ie=UTF-8#safe=strict&q=charts+js+and+pulling+data+from+mysql+node.js
+
+creating-interactive-charts-using-node-express-and-mongodb.html
+http://stackoverflow.com/questions/30928840/chart-js-getting-data-from-database-using-mysql-and-php
+
+WTH  MONGODB
+ -->
