@@ -1,0 +1,1 @@
+An app where you can access a mysql database using nodejs and u can visualize data using chartjs(javascript library for visualization)
